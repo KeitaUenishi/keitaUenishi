@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>ユーザー情報一覧</title>
+<link rel="stylesheet"
+th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}" />
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+	<div class="container">
+
+		<!-- ヘッダー -->
+		<header class="mt-5">
+			<div id="header-container" th:insert="layout/header :: fra-header"></div>
+		</header>
+
+		<div class="row mt-5">
+
+			<!-- col-smで解像度がスマホ(～767px)以下の時、2列表示 -->
+
+			<!-- メニュー・サイドバー -->
+			<nav class="col-sm-2">
+				<div id="sidebar-container"
+				th:insert="layout/sidebar :: fra-sidebar"></div>
+			</nav>
+
+			<!-- メイン -->
+			<section id="main-container" class="offset-sm-1 col-sm-9">
+			<table class="table table-striped">
+
+			<tr>
+				<th>ID</th>
+				<th>名前</th>
+				<th>メール</th>
+				<th>住所</th>
+				<th>性別</th>
+				<th>備考</th>
+				<th></th>
+				<th></th>
+			</tr>
+
+			<th:block th:with="userInfo=${users}">
+			<tr th:each="user : ${userInfo}">
+				<td th:text="${user.id}"></td>
+				<td th:text="${user.user}"></td>
+				<td th:text="${user.email}"></td>
+				<td th:text="${user.address}"></td>
+				<td th:text="${user.sex}? #{sex.male} : #{sex.female}"></td>
+				<td th:text="${user.remark}"></td>
+				<td><a class="btn btn-success"
+				th:href="@{/users/edit/{id}(id=${user.id})}">編集</a></td>
+				<td><a class="btn btn-danger"
+				th:href="@{/users/delete/{id}(id=${user.id})}">削除</a></td>
+			</tr>
+			</th:block>
+
+			</table>
+			</section>
+
+		</div>
+
+	</div>
+
+</body>
+</html>
